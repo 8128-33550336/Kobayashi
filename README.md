@@ -1,7 +1,7 @@
 TVアニメ「小林さんちのメイドラゴン」のOP映像の一部を再現
 
 最終的なプログラムは
-[build.js]()
+[build.js](https://github.com/8128-33550336/Kobayashi/blob/main/build.js)
 にあります。
 
 # 作り方
