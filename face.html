@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Face</title>
+    <style>
+        div {
+            width: 910px;
+            height: 650px;
+            border:solid 1px #333;
+        }
+        canvas {
+            border:solid 1px #333;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas1" width="910" height="650"></canvas>
+    <canvas id="canvas2" width="910" height="650"></canvas>
+    <canvas id="canvas3" width="910" height="650"></canvas>
+    <canvas id="canvas" width="910" height="650"></canvas>
+    <div>
+        <label for="fileSelectorFirst">顔が2つ</label><input type="file" id="fileSelectorFirst">
+        <label for="fileSelectorSecond">顔が3つ</label><input type="file" id="fileSelectorSecond">
+        <label for="fileSelectorThird">顔が4つ</label><input type="file" id="fileSelectorThird">
+        <a id="a" download href="" hidden>Download</a>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const file1 = document.getElementById('fileSelectorFirst');
+            const file2 = document.getElementById('fileSelectorSecond');
+            const file3 = document.getElementById('fileSelectorThird');
+            const canvas = document.getElementById('canvas');
+            const canvas2D = canvas.getContext('2d');
+            const canvas1 = document.getElementById('canvas1').getContext('2d');
+            const canvas2 = document.getElementById('canvas2').getContext('2d');
+            const canvas3 = document.getElementById('canvas3').getContext('2d');
+            const download = document.getElementById('a');
+
+            const width = 910;
+            const height = 650;
+            const shift = 103;
+
+            Promise.all([[file1, canvas1], [file2, canvas2], [file3, canvas3]].map(([pick, canv]) => 
+                new Promise((resolve, reject) => {
+                    pick.addEventListener('change', () => {
+                        if (pick.files.length === 0) {
+                            reject();
+                        }
+                        const img = new Image();
+                        img.onload = () => {
+                            canv.drawImage(img, 0, 0);
+                            const imgData = canv.getImageData(0, 0, width, height).data;
+                            const data = 
+                            [...new Array(height)].map((_, i) => {
+                                const line = imgData.slice(i * width * 4, (i + 1) * width * 4);
+                                return [...new Array(width)].map((_, j) => {
+                                    const ceil = line.slice(j * 4, (j + 1) * 4);
+                                    return ceil;
+                                })
+                            });
+                            resolve(data);
+                        };
+                        img.src = URL.createObjectURL(pick.files[0]);
+                    });
+                }
+            ))).then(([data1, data2, data3]) => {
+                const outputImg = canvas2D.createImageData(width, height);
+                const modulo = (n, mod) => ((n % mod) + mod) % mod;
+                for (let i = 0; i < height; i++) {
+                    for (let j = 0; j < width; j++) {
+                        let sum = 0;
+                        for (let k = 0; k < 3; k++) {
+                            sum += data3[i][j][k]
+                                + data1[i][modulo((j - shift), width)][k]
+                                + data1[i][modulo((j - 2 * shift), width)][k]
+                                + data1[i][modulo((j - 3 * shift), width)][k]
+                                - data2[i][j][k]
+                                - data2[i][modulo((j - shift), width)][k]
+                                - data2[i][modulo((j - 2 * shift), width)][k];
+                        }
+                        for (let k = 0; k < 3; k++) {
+                            outputImg.data[i * width * 4 + j * 4 + k] = sum < 255 * 3 / 2 ? 0 : 255;
+                        }
+                        outputImg.data[i * width * 4 + j * 4 + 3] = 255;
+                    }
+                }
+                canvas2D.putImageData(outputImg, 0, 0);
+                download.href = canvas.toDataURL('image/png');
+                download.hidden = false;
+            });
+        });
+    </script>
+</body>
+</html>

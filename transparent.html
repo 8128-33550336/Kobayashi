@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <textarea name="" id="textarea"></textarea>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const text = `
+                -..                                                                                                 
+               .:::..                                                                                               
+                :. .=..:                                                                                            
+                      -                                                                                             
+                       -.                                                                                           
+                .:      :                                                                                           
+                .        .                                                                                          
+                                     .....::....... ...........:..                                                  
+               .                        :...:.::.               .:. .::. :.             :.-+:               .. -*.  
+              .                     ..:-.:                    :..:.    .:...:.        :...  -.             .... ..  
+             ..          .      .::=..               .  ..==::..:....:.:.   ..:...   .:.   :.             ...  ..   
+                         ..   . .:.            ...-+-......:.-       :=...:.    .:..-:    .              .          
+            ..              ...            . :==--::::       :.     ..-:   ..     =:: .   .             ..    ..    
+                          -=:.            :::.-...            .: ... :     ..  .  =.:...  =             -     .:    
+           .              .:...       . ::-...                ....: .       ..::. . .:....=            ..     .:    
+            .               ... .    .. :                                    .   ...   ...=.                  ..    
+           :.                 ::    .::.             :       .                          .:-.          ..       .    
+           --                   -.=:.              ..       :                 :.          *:          .        .:   
+            -       :            .                                            :            . .    . .:         ::   
+            :      .  .      ....                  -                          ..            .+:   ..           ::   
+             . .     . .    . .                  .....      -                  .             .-:..             :.   
+             .=        .. .  .               ..  ......     :                  .               =.              :.   
+              .-        . . .           .    .. .+.. ... ....                  .              ....             ::   
+              .=.=:                    ::   ..  .:        .+                   .               ::-             .    
+              -=..: .::                .        -          +                 .:.=::            ...:          .-:    
+             :=:      ..=..           .-       ..          -                ..::::.-: ...       : -..: .:.   :-     
+            .-           ..           :-      :+          =:                    =      ...      : :: ....   .:      
+            :           .:            :.      ::          :                     --              :. : ...   :        
+           ..           -:            -      . :         .-                     -=              .  ... . :.         
+          ::           :-            :-     .:..         .:    -            .   :-:        :    :. .:..:            
+         :.:           ::            --      .:         :.:   .:            :.  -..        :    .- .:.  ..          
+  ..      .           ..             =      .:-         : :   -:            :   =-:       .     .:  ..   ..         
+   .  ....          .: .             -      :.=.       :=.:   :-                - :             ..  ..   .          
+  : :.          .. .. ..             :     :+ -     .  :.:.   ++                -..        .    .-                  
+  .    .          .  :.:            .:     ::.:        :: :  .*:           ..   =. :      ::     :                  
+     ::.              -:            .     .-.--    .=..:..:  .+-.          .-   -..             .-   .   :          
+       . .....:-::...:*:            -     -: +:::..+:.-- -.  .+-.          .+.  - ..            .-      ..          
+          :    ..    -+:            -    .:..=: ..:=:.===:.  .+-.          :=.  -.::     .:     .:    . -           
+         :.         .-=.           ...*..+=.--+:.:**::-=+-   :*=.         .:*=..=..:     .:     ..    . -           
+        .:          =*..           ..=-..-:...-...+=:--:+=.  :+:.         .:+=..*:.:     .+.    -.   ..  :.         
+        :-         :=+-=           . .++:.==::...=.=++-:+:.. .:..        --#*-..#:.:    . :    .=    ..  :..        
+       ::         .++=:=           .:++:..   .-     :- .: ..:.....:......+++::..*::+...:.::     -     ::.. :-       
+      ..          .**-.=           .: -.:..  .=  .: =- .           :....:++-=*=-:..+:.:.=-:    .:    .:. . .        
+      .           -+-.:=              .   --:..  -. ::.:                :-.:.::..... -..=-     :.     :             
+     ::   .      :=:--.+           .   .. .-=++- : :::.                 -:.  .-.  .  .:.-::..:=.  .  .:             
+     =.  :      :*: .  =          ::        .-:. :.-::.                 -..:  -  .::::- . :. -:  .-  ::             
+    ::   .      :--.  :-                .:.    :::.:.                   =:.::::: -. -: ..:==-+   .-  -.             
+    .   .      :-..   -+                   .. .. .                      -:..:::-=. -::.. . .::   ...::              
+  ::-   ..     -- ..  -:                .                                :.::=+=-   -:. ..-. .   .--::              
+  :*:.  :.:   .=- ..:  =.              :...                               -=    :.:-.   ... ..    #.                
+  =:=   :=+.  -=   -. ::=         .     :-=*:                               -:.::.     ..:: .    -.                 
+   -.-. .=-:: .-    :-  -    ..   .                                           ...      :..:.:    ::                 
+    -.   *. :-.     ....-         :                                         ...        : . .-   .-                  
+     .:  .=::*-     ....::        .                                               .   ::.  ::    :                  
+       .-:.*+.=.    ... .=                                                            -..  =    .                   
+          .=#*+=..  .   .-.  ..   ..                                                 .=.. .+    :                   
+             :+=-:::.---::=        -                                                 :-.. .:    -                   
+                 ..:::...:+        ::=.                   . .                       .: .::.    ..                   
+                          .-       -  ..:.             .....==                   .:.. .::.:    .                    
+                           :       ..     . ..         :.   .=                ..::.     .::   ..                    
+                           .-  :.  .-         .....   ..   .+:           ::.::.:     :- .=:   :.                    
+                           .-. ..   =           :+== .---::--:::... :==:. -::-       .::--    .                     
+                           .-. ::   -           :.::=-...       . ...-.::-:........:.=-:-:                          
+                            .- .::  :.           . .::--=:            . .::::----:..:=:.:.   ..                     
+                            ..  ..  :                                               .. .                            
+                             ...:-   .                                              .-.     :.                      
+                             :::::: :-                                              =:.     .                       
+                               :. .:.=                                              :  :.  :.                       
+                                     .                                              .:.:   +                        
+                                                                                       .  :                         
+                                                                                      .- ..                         
+                                                                                       ...                          
+                                                                                                                    
+`.slice(1, -1).split('\n');
+
+            const width = Math.max(...text.map(v => v.length));
+            const shift = 18;
+            const textarea = document.getElementById('textarea');
+            const root = document.getElementById('root');
+            const array = [...new Array(text.length)].map(() => {
+                const e = [...new Array(width + shift)].map(() => ({
+                    'element': root.appendChild(document.createElement('span')),
+                    'state': false
+                }));
+                root.appendChild(document.createElement('br'));
+                return e;
+            });
+            let penMode = 'none';
+            document.addEventListener('keydown', (e) => {
+                penMode = e.key === 'z' ? 'on' : 'off';
+            });
+            document.addEventListener('keyup', () => penMode = 'none');
+            text.forEach((rowLine, i) => {
+                const line = rowLine.padEnd(width, ' ');
+                for (let j = 0; j < width + shift; j++) {
+                    const char = array[i][j];
+                    char.element.textContent = j <= shift ? line[j] : line[j - shift];
+                    char.state = false;
+                    char.element.style.color = j <= shift ? '#f00' : '#000';
+                    const canToggle = shift < j && j < width && line[j] !== ' ' && line[j - shift] === ' ';
+                    if (canToggle) {
+                        char.element.style.backgroundColor = '#ddf';
+                        char.element.addEventListener('mouseenter', (event) => {
+                            if (penMode !== 'none') {
+                                char.state = penMode === 'on';
+                                char.element.textContent = char.state ? line[j] : ' ';
+                                char.element.style.color = char.state ? '#f00' : '#000';
+                                char.element.style.backgroundColor = char.state ? '#fdd' : '#ddf';
+                                textarea.value = array.map((li, y) => li.map((c, x) => c.state ? '\u00a0' : (x < shift ? '' : text[y][x - shift])).join('')).join('\n');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
